@@ -49,6 +49,12 @@ python -m torch.distributed.run --standalone --nproc_per_node=4  train.py --outd
 ```
 where you can adjust lossType as 'KLUB' or 'KLUB-AS' 
 
+## Model Checkpoints
+
+Model checkpoints can be downloaded from 
+```sh
+https://huggingface.co/UT-Austin-PML/BetaDiffusion/tree/main
+```
 ## Sampling 
 Sample 100 example images using 200 NFEs
 ```
