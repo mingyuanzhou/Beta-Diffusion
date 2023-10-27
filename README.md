@@ -58,7 +58,7 @@ https://huggingface.co/UT-Austin-PML/BetaDiffusion/tree/main
 ## Sampling 
 Sample 100 example images using 200 NFEs
 ```
-python -m torch.distributed.run --standalone --nproc_per_node=4 generate.py --steps=200 --outdir=plots/generated_images --network=plots/checkpoint_beta_KLUB/network-snapshot-200000.pkl --seeds=0-99 --batch=100
+python -m torch.distributed.run --standalone --nproc_per_node=4 generate.py --steps=200 --outdir=plots/generated_images --network=plots/checkpoint_Beta_KLUB_B288/network-snapshot-200000.pkl --seeds=0-99 --batch=100
 ```
 
 
