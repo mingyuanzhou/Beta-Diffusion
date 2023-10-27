@@ -1,0 +1,47 @@
+description: Improved-diffusion
+
+target:
+  service: aml
+  name: V10032G
+
+environment:
+  image: hjegzheng/dm_pytorch1.21_cuda11.3_cudnn8:latest
+  setup:
+    - pip install timm==0.3.2 
+    - pip install tensorboard
+
+storage:
+    output:
+        storage_account_name: tsinterns
+        container_name: t-hzheng
+        mount_dir: /hjzheng           
+
+
+code:
+  # local directory of the code. this will be uploaded to the server.
+  # $CONFIG_DIR is expanded to the directory of this config file
+  local_dir: ./
+
+search:
+  job_template:
+    name: Improved-diffusion-{data}-{arch}-{precond}-cond{condition}
+    sku: 1xG8-V100
+    process_count_per_node: 1
+    command:
+      - ulimit -n 4096
+      - torchrun --standalone --nproc_per_node=8 train.py --outdir=/hjzheng/score_matching_experiments/beta-distribution-score-matching-training-runs/ --data=/hjzheng/datasets/{data}/cifar10.zip --cond={condition} --arch={arch} --batch=512 --precond={precond}
+    submit_args:
+      container_args:
+        shm_size: 2048g
+  max_trials: 10
+  type: grid
+  params:
+    - name: data
+      values: ['cifar10'] 
+    - name: precond
+      values: ['bd']
+    - name: arch
+      values: ['ddpmpp'] 
+    - name: condition
+      values: [0] 
+    

@@ -1,0 +1,50 @@
+description: Contrastive-diffusion
+
+target:
+  service: aml
+  name: V10032G
+
+environment:
+  image: azureml/openmpi4.1.0-cuda11.3-cudnn8-ubuntu20.04:latest #hjegzheng/ldm_rdm:latest
+  setup:
+    - pip install git+https://github.com/openai/CLIP.git@main#egg=clip
+    - pip install torch==1.12.1+cu113 torchvision==0.13.1+cu113 torchaudio==0.12.1 --extra-index-url https://download.pytorch.org/whl/cu113
+    - pip install imageio imageio-ffmpeg==0.4.4 pyspng click requests tqdm pyspng ninja Pillow blobfile mypy pytest psutil deepspeed==0.4.0
+    - pip install azureml-defaults
+    - pip install protobuf==3.19.4
+
+storage:
+    output:
+        storage_account_name: tsinterns
+        container_name: t-hzheng
+        mount_dir: /hjzheng           
+
+
+code:
+  # local directory of the code. this will be uploaded to the server.
+  # $CONFIG_DIR is expanded to the directory of this config file
+  local_dir: ./
+
+search:
+  job_template:
+    name: Contrastive-diffusion-{data}-tau{tau}-gamma{gamma}
+    sku: 1xG8-V100
+    process_count_per_node: 1
+    command:
+      - ulimit -n 4096
+      - torchrun --standalone --nproc_per_node=8 train.py --outdir=/hjzheng/contrastive-diffusion/training-runs/{data} --data=/hjzheng/datasets/{data}/cifar10.zip --cond=1 --arch=adm --batch=512 --direction={direction} --tau={tau} --gamma={gamma}
+    submit_args:
+      container_args:
+        shm_size: 2048g
+  max_trials: 10
+  type: grid
+  params:
+    - name: data
+      values: ['cifar10'] 
+    - name: direction
+      values: ['forward']
+    - name: tau
+      values: [-1.0]
+    - name: gamma
+      values: [1.0] 
+    
