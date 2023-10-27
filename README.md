@@ -70,7 +70,13 @@ python fid.py ref --data=datasets/cifar10-32x32.zip --dest=fid-refs/cifar10-32x3
 ```
 which will put the 'cifar10-32x32.npz' file into the 'fid-refs' folder.
 
+## Visulization
 
+Run 
+```sh
+beta_diffusion_toy_plot.ipynb
+Plot_BetaDiff.ipynb
+```
 
 To evaluate the trained Beta Diffsuion model, first place both the checkpoint 'filename.pkl', which stores the model, and the json file 'training_options.json', which stores model paramerers used for training, into a folder, such as 'plots/checkpoint_beta_KLUB/', and then run the following code:
 
