@@ -3,7 +3,7 @@
 ```bibtex
 @inproceedings{zhou2023beta,
     title={Beta Diffusion},
-    author={Mingyuan Zhou and  Tianqi Chen and Zhendong Wang and Huangjie Zheng},
+    author={Mingyuan Zhou and Tianqi Chen and Zhendong Wang and Huangjie Zheng},
     booktitle = {Neural Information Processing Systems},
     year={2023}
 }
@@ -23,7 +23,7 @@ pip install click pillow scipy psutil requests tqdm imageio pyspng
 ```
 After setting up the environment, go to one of the folder. For example:
 ```sh
-cd BetaDiffusion/image_experiment
+cd Beta-Diffusion/image_experiment
 ```
 
 ## Data Preparation
@@ -78,7 +78,7 @@ beta_diffusion_toy_plot.ipynb
 Plot_BetaDiff.ipynb
 ```
 
-To evaluate the trained Beta Diffsuion model, first place both the checkpoint 'filename.pkl', which stores the model, and the json file 'training_options.json', which stores model paramerers used for training, into a folder, such as 'plots/checkpoint_beta_KLUB/', and then run the following code:
+To evaluate the trained Beta Diffusion model, first place both the checkpoint 'filename.pkl', which stores the model, and the json file 'training_options.json', which stores model parameters used for training, into a folder, such as 'plots/checkpoint_beta_KLUB/', and then run the following code:
 
 ```bash
 #Generate 50000 images, using NFEs=200
